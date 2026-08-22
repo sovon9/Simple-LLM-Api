@@ -1,28 +1,33 @@
 package com.sovon9.Simple_LLM_Api.controlller;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ChatControllerWithDefaults {
+public class PromptStuffingController {
 
-    @Autowired
     private ChatClient chatClient;
 
-    /**
-     *  In ChatClientConfig class uncomment the defaultSystem line for default system message to take effect
-     * @param message
-     * @return
-     */
-    @GetMapping("/role/default/chat")
-    public String chatToLLMWithRole(@RequestBody String message)
+    @Value("classpath:/promptTemplates/systemMessage.st")
+    private Resource promptTemplate;
+
+    public PromptStuffingController(ChatClient.Builder builder)
+    {
+        chatClient = builder.build();
+    }
+
+    @GetMapping("/promptStuffing/chat")
+    public String chatToLLMUsingTemplate(@RequestBody String message)
     {
         ChatClient.CallResponseSpec callResponseSpec = chatClient.prompt()
+                .system(promptTemplate)
                 .user(message).call();
         return callResponseSpec.content();
     }
+
 
 }
