@@ -1,6 +1,7 @@
 package com.sovon9.Simple_LLM_Api.controlller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,9 @@ public class PromptStuffingController {
 
     public PromptStuffingController(ChatClient.Builder builder)
     {
-        chatClient = builder.build();
+        chatClient = builder
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
     }
 
     @GetMapping("/promptStuffing/chat")

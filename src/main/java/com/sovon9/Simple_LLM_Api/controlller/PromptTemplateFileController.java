@@ -1,5 +1,6 @@
 package com.sovon9.Simple_LLM_Api.controlller;
 
+import com.sovon9.Simple_LLM_Api.config.advisor.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -33,6 +34,7 @@ public class PromptTemplateFileController {
     public String chatToLLMUsingTemplate(@RequestParam("username") String username, @RequestBody String message)
     {
         ChatClient.CallResponseSpec callResponseSpec = chatClient.prompt()
+                .advisors(new TokenUsageAuditAdvisor())
                 .user(promptUserSpec -> promptUserSpec.text(promptTemplate)
                         .param("username", username).param("message", message)).call();
         return callResponseSpec.content();
