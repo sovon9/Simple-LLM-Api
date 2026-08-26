@@ -58,4 +58,9 @@ curl --location --request GET 'http://localhost:8080/role/default/chat' \
 --header 'Content-Type: application/json' \
 --data 'I am having caugh and cold, what to do?'
 ````
-
+# Structured Output as SupportTicket json
+````
+curl --location --request GET 'http://localhost:8080/structured/chat' \
+--header 'Content-Type: application/json' \
+--data 'my laptop is not booting up, it'\''s just flasing the hp logo one then gpoing blank. please help'
+````
