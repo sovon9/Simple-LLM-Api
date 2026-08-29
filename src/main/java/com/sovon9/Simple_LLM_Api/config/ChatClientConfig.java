@@ -26,10 +26,10 @@ public class ChatClientConfig {
 
     // if you want customization then need to create a chatMemory object
     // here max messages to keep in memory is set to 10
-    @Bean("customChatMemory")
-    public ChatMemory chatMemory(JdbcChatMemoryRepository chatMemoryRepository)
-    {
-        return MessageWindowChatMemory.builder().maxMessages(10).chatMemoryRepository(chatMemoryRepository).build();
-    }
+//    @Bean("customChatMemory")
+//    public ChatMemory chatMemory(JdbcChatMemoryRepository chatMemoryRepository)
+//    {
+//        return MessageWindowChatMemory.builder().maxMessages(10).chatMemoryRepository(chatMemoryRepository).build();
+//    }
 
 }
