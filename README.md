@@ -1,17 +1,34 @@
 # Simple-LLM-Api
 simple LLM api method testing
 
-## Chat Memory
+## Chat using RAG
 ```
-curl --location --request GET 'http://localhost:8080/chat-memory' \
+curl --location --request GET 'http://localhost:8080/rag/chat' \
 --header 'Content-Type: application/json' \
 --header 'username: Sovon' \
---data 'Hi, my name is Sovon.'
+--data 'what are the perks of this company?'
 ```
-## Custom chat memory with max messages=10
-````
-curl --location --request GET 'http://localhost:8080/chat-memory' \
+
+## Chat using Document RAG
+```
+curl --location --request GET 'http://localhost:8080/rag/doc/manual/chat' \
 --header 'Content-Type: application/json' \
 --header 'username: Sovon' \
---data 'what is  my name?'
-````
+--data ' how can I apply for a leave?'
+```
+
+## chat using advisor
+```
+curl --location --request GET 'http://localhost:8080/rag/doc/advisor/chat' \
+--header 'Content-Type: application/json' \
+--header 'username: Sovon' \
+--data ' how can I apply for a leave?'
+```
+
+## chat using web search
+```
+curl --location --request GET 'http://localhost:8080/rag/websearch/chat' \
+--header 'Content-Type: application/json' \
+--header 'username: Sovon' \
+--data 'how is the Indian stock market on 4th September?'
+```

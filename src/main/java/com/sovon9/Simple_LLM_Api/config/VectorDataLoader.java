@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+/**
+ * uncomment it to test how RAG can be used with raw String data
+ */
+//@Component
 public class VectorDataLoader {
 
     private final VectorStore vectorStore;
