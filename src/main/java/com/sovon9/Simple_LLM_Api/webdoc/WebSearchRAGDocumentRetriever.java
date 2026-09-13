@@ -16,6 +16,9 @@ import tools.jackson.databind.annotation.JsonNaming;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * custom implementation of DocumentRetriever interface to retrieve information from web
+ */
 public class WebSearchRAGDocumentRetriever implements DocumentRetriever {
 
     Logger LOGGER = LoggerFactory.getLogger(WebSearchRAGDocumentRetriever.class);
