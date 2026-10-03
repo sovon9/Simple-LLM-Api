@@ -1,9 +1,13 @@
 package com.sovon9.Simple_LLM_Api.controlller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 public class ChatController {
@@ -12,27 +16,20 @@ public class ChatController {
     private final ChatClient chatClient;
 
     // ChatClient.Builder helps us to create the implementation class object which is DefaultChatClient
-    public ChatController(ChatClient.Builder builder)
+    public ChatController(ChatClient chatClient)
     {
-        this.chatClient = builder.build();
+        this.chatClient = chatClient;
     }
 
     @GetMapping("/chat")
-    public String chatToLLM(@RequestBody String message)
+    public String chatToLLM(@RequestBody String message, @RequestHeader("username") String username)
     {
-        ChatClient.CallResponseSpec callResponseSpec = chatClient.prompt(message).call();
-        // CallResponseSpec gives a lot of details related to many specifications of the response like model and all
-        // to get only the response from it we can use content()
-        return callResponseSpec.content();
-    }
-
-    @GetMapping("/role/chat")
-    public String chatToLLMWithRole(@RequestBody String message)
-    {
-        ChatClient.CallResponseSpec callResponseSpec = chatClient.prompt()
-                .system("you are a medical assistant. you help users to understand their medical issues and suggest them to consult with a doctor." +
-                        "Do not help in any topic not related to medical issues, ask them you can only help if it's related to medical issues")
-                .user(message).call();
+        ChatClient.CallResponseSpec callResponseSpec = chatClient
+                .prompt()
+                .user(message)
+                .toolContext(Map.of("username", username))
+                .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, username))
+                .call();
         // CallResponseSpec gives a lot of details related to many specifications of the response like model and all
         // to get only the response from it we can use content()
         return callResponseSpec.content();
